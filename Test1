@@ -1,0 +1,99 @@
+<body>
+    <h1>Activité 1</h1>
+
+    <!-- Les nouveaux éléments sont ajoutés dans cette balise -->
+    <div id="contenu">
+    </div>
+
+    <script>var listeLiens = [
+    {
+        titre: "So Foot",
+        url: "http://sofoot.com",
+        auteur: "yann.usaille"
+    },
+    {
+        titre: "Guide d'autodéfense numérique",
+        url: "http://guide.boum.org",
+        auteur: "paulochon"
+    },
+    {
+        titre: "L'encyclopédie en ligne Wikipedia",
+        url: "http://Wikipedia.org",
+        auteur: "annie.zette"
+    }
+];
+
+// TODO : compléter ce fichier pour ajouter les liens à la page web
+var cont = document.getElementById('contenu');
+
+listeLiens.forEach(function (lien) {
+	var parag = document.createElement('p');
+	var link = document.createElement('a');
+	var saut = document.createElement('br');
+  
+  parag.className += "lien";
+  
+  link.href = lien.url;
+  link.style.color = "#428bca";
+  link.style.fontWeight = "bold";
+  link.style.textDecoration = "none";
+  
+  link.textContent = lien.titre + " ";
+  parag.appendChild(link);
+  parag.appendChild(document.createTextNode(lien.url));
+  parag.appendChild(saut);
+  parag.appendChild(document.createTextNode("Ajouté par " + lien.auteur));
+  
+  cont.appendChild(parag);
+  
+})
+
+var ajoutLien = document.createElement('button');
+ajoutLien.textContent = 'Ajouter Lien'
+
+var bodyElt = document.querySelector('body');
+bodyElt.insertBefore(ajoutLien, cont);
+
+function creerFormulaire(e){
+	e.target.style.display = 'none';
+	var formulaire = document.createElement('form'),
+  titre = document.createElement('input'),
+  link = document.createElement('input'),
+  auteur = document.createElement('input'),
+  envoi = document.createElement('button');
+  envoi.textContent = 'Envoyer';
+  envoi.type = 'submit';
+  titre.type = 'text'; titre.name = 'auteur';
+  titre.placeholder = 'Titre du lien';
+  link.type = 'url'; link.name = 'link';
+  link.placeholder = 'url du lien';
+  auteur.type = 'text'; auteur.name = 'auteur';
+  auteur.placeholder = 'auteur du lien';
+  formulaire.appendChild(titre);
+  formulaire.appendChild(link);
+  formulaire.appendChild(auteur);
+  formulaire.appendChild(envoi);
+	bodyElt.insertBefore(formulaire, cont);
+  
+  var inputs = document.getElementsByTagName('input');
+  //alert(inputs);
+	envoi.addEventListener('click', function(e){
+    e.preventDefault();
+  	for ( var i = 0, c = inputs.length; i < c; i++){
+    	if(inputs[i].value === ""){
+        if (!inputs[i].classList.contains('incorrect')){inputs[i].className +='incorrect';}
+        break;
+      } else {
+      	if (inputs[i].classList.contains('incorrect')){inputs[i].className -='incorrect';}
+        
+      }
+      //alert(inputs[i].value)
+    }
+  });
+  
+}
+
+ajoutLien.addEventListener('click', creerFormulaire);
+
+</script>
+</body>
